@@ -1,5 +1,4 @@
-import { Link } from '@mui/material';
-import { CarResponse } from '../types';
+import { CarResponse, Car, CarEntry } from '../types';
 import axios from 'axios';
 
 // Get
@@ -22,5 +21,16 @@ export const addCar = async (car: Car) => {
       'Content-Type': 'application/json',
     },
   })
+  return response.data;
+}
+
+// PUT
+export const updateCar = async (carEntry: CarEntry) : Promise<CarResponse> => {
+  const response = await axios.put(carEntry.url, carEntry.car, {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+
   return response.data;
 }

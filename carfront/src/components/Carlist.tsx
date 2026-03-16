@@ -1,9 +1,10 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { getCars, deleteCar } from "../api/carapi";
-import { DataGrid, GridCellParams, GridColDef } from "@mui/x-data-grid";
+import { DataGrid, GridCellParams, GridColDef, GridToolbar } from "@mui/x-data-grid";
 import { Snackbar } from "@mui/material";
 import { useState } from "react";
 import AddCar from "./AddCar";
+import EditCar from "./EditCar";
 
 export default function Carlist() {
   const [ open, setOpen ] = useState(false);
@@ -39,6 +40,14 @@ export default function Carlist() {
       field: 'price',
       headerName: '가격',
       width: 200,
+    },
+    {
+      field: 'edit',
+      headerName: '',
+      sortable: false,
+      filterable: false,
+      disableColumnMenu: true,
+      renderCell: (params: GridCellParams) => <EditCar cardata={params.row} />
     },
     {
       field: 'delete',
@@ -87,6 +96,7 @@ export default function Carlist() {
           columns={columns}
           disableRowSelectionOnClick
           getRowId={row => row._links.self.href}
+          slots = {{ toolbar: GridToolbar }}
         />
         <Snackbar 
           open={open}
