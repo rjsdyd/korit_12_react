@@ -6,8 +6,13 @@ import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import { useState } from "react";
 import AddCar from "./AddCar";
 import EditCar from "./EditCar";
+import { Button, Stack } from "@mui/material"
 
-export default function Carlist() {
+type CarlistProps = {
+  logout? : () => void;
+}
+
+export default function Carlist({logout} : CarlistProps) {
   const [ open, setOpen ] = useState(false);
   const queryClient = useQueryClient();
 
@@ -96,7 +101,10 @@ export default function Carlist() {
   } else {
     return(
       <>
+        <Stack direction='row' alignItems='center' justifyContent='space-between'>
         <AddCar/>
+        <Button onClick={logout}>Logout</Button>
+        </Stack>
         <DataGrid
           rows={data}
           columns={columns}
